@@ -75,24 +75,16 @@ public class PackageSniffer {
         String currentPackage;
 
         switch (processName) {
-            case Constants.AMAZON: {
-                currentPackage = Constants.AMAZON;
+            case Constants.Package.AMAZON_PACKAGE_NAME: {
+                currentPackage = Constants.Package.AMAZON_PACKAGE_NAME;
                 Intent intent = new Intent(mContext, IconService.class);
                 intent.putExtra(Constants.PACKAGE_NAME, currentPackage);
                 mContext.startService(intent);
             }
             break;
 
-            case Constants.FLIPKART: {
-                currentPackage = Constants.FLIPKART;
-                Intent intent = new Intent(mContext, IconService.class);
-                intent.putExtra(Constants.PACKAGE_NAME, currentPackage);
-                mContext.startService(intent);
-            }
-            break;
-
-            case Constants.LATEX_MOBILE: {
-                currentPackage = Constants.LATEX_MOBILE;
+            case Constants.Package.FLIPKART_PACKAGE_NAME: {
+                currentPackage = Constants.Package.FLIPKART_PACKAGE_NAME;
                 Intent intent = new Intent(mContext, IconService.class);
                 intent.putExtra(Constants.PACKAGE_NAME, currentPackage);
                 mContext.startService(intent);

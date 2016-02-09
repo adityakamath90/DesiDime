@@ -1,9 +1,12 @@
 package service.desidimeservice.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Merchant {
+public class Merchant implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -125,4 +128,42 @@ public class Merchant {
         this.averageRating = averageRating;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.image);
+        dest.writeString(this.permalink);
+        dest.writeString(this.recommendation);
+        dest.writeValue(this.recommendationFlag);
+        dest.writeString(this.averageRating);
+    }
+
+    public Merchant() {
+    }
+
+    protected Merchant(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.image = in.readString();
+        this.permalink = in.readString();
+        this.recommendation = in.readString();
+        this.recommendationFlag = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.averageRating = in.readString();
+    }
+
+    public static final Parcelable.Creator<Merchant> CREATOR = new Parcelable.Creator<Merchant>() {
+        public Merchant createFromParcel(Parcel source) {
+            return new Merchant(source);
+        }
+
+        public Merchant[] newArray(int size) {
+            return new Merchant[size];
+        }
+    };
 }

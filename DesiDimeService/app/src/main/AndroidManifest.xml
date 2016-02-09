@@ -24,6 +24,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.DealDetailActivity"
+            android:screenOrientation="portrait"/>
+
         <service
             android:name=".service.IconService"
             android:enabled="true"

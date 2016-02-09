@@ -1,9 +1,12 @@
 package service.desidimeservice.dto;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Deal {
+public class Deal implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -244,4 +247,56 @@ public class Deal {
         this.merchant = merchant;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.offPercent);
+        dest.writeString(this.currentPrice);
+        dest.writeString(this.originalPrice);
+        dest.writeString(this.image);
+        dest.writeString(this.commentsCount);
+        dest.writeString(this.createdAt);
+        dest.writeString(this.score);
+        dest.writeString(this.voteValue);
+        dest.writeString(this.description);
+        dest.writeString(this.shareUrl);
+        dest.writeString(this.dealUrl);
+        dest.writeParcelable(this.merchant, flags);
+    }
+
+    public Deal() {
+    }
+
+    protected Deal(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.offPercent = in.readString();
+        this.currentPrice = in.readString();
+        this.originalPrice = in.readString();
+        this.image = in.readString();
+        this.commentsCount = in.readString();
+        this.createdAt = in.readString();
+        this.score = in.readString();
+        this.voteValue = in.readString();
+        this.description = in.readString();
+        this.shareUrl = in.readString();
+        this.dealUrl = in.readString();
+        this.merchant = in.readParcelable(Merchant.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Deal> CREATOR = new Parcelable.Creator<Deal>() {
+        public Deal createFromParcel(Parcel source) {
+            return new Deal(source);
+        }
+
+        public Deal[] newArray(int size) {
+            return new Deal[size];
+        }
+    };
 }
