@@ -9,5 +9,6 @@ import service.desidimeservice.utility.Constants;
 
 public interface DesiDimeService {
     @GET("{id}.json")
-    Call<DesiDimeData> getOffers(@Path(Constants.ID) String id, @Header(Constants.KEY) String token);
+    Call<DesiDimeData> getOffers(@Path(Constants.ID) String id, @Header(Constants.KEY) String
+            token);
 }
