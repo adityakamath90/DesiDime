@@ -10,7 +10,7 @@ public class Topic {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("fpd_flag")
     @Expose
     private Boolean fpdFlag;
@@ -19,16 +19,16 @@ public class Topic {
     private String title;
     @SerializedName("view_count")
     @Expose
-    private Integer viewCount;
+    private String viewCount;
     @SerializedName("posts_count")
     @Expose
-    private Integer postsCount;
+    private String postsCount;
     @SerializedName("last_activity_at")
     @Expose
-    private Integer lastActivityAt;
+    private String lastActivityAt;
     @SerializedName("score")
     @Expose
-    private Integer score;
+    private String score;
     @SerializedName("forum_name")
     @Expose
     private String forumName;
@@ -37,7 +37,7 @@ public class Topic {
     private String shareUrl;
     @SerializedName("front_page_suggestions_count")
     @Expose
-    private Integer frontPageSuggestionsCount;
+    private String frontPageSuggestionsCount;
     @SerializedName("categories")
     @Expose
     private List<Object> categories = new ArrayList<Object>();
@@ -51,14 +51,14 @@ public class Topic {
     /**
      * @return The id
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -93,56 +93,56 @@ public class Topic {
     /**
      * @return The viewCount
      */
-    public Integer getViewCount() {
+    public String getViewCount() {
         return viewCount;
     }
 
     /**
      * @param viewCount The view_count
      */
-    public void setViewCount(Integer viewCount) {
+    public void setViewCount(String viewCount) {
         this.viewCount = viewCount;
     }
 
     /**
      * @return The postsCount
      */
-    public Integer getPostsCount() {
+    public String getPostsCount() {
         return postsCount;
     }
 
     /**
      * @param postsCount The posts_count
      */
-    public void setPostsCount(Integer postsCount) {
+    public void setPostsCount(String postsCount) {
         this.postsCount = postsCount;
     }
 
     /**
      * @return The lastActivityAt
      */
-    public Integer getLastActivityAt() {
+    public String getLastActivityAt() {
         return lastActivityAt;
     }
 
     /**
      * @param lastActivityAt The last_activity_at
      */
-    public void setLastActivityAt(Integer lastActivityAt) {
+    public void setLastActivityAt(String lastActivityAt) {
         this.lastActivityAt = lastActivityAt;
     }
 
     /**
      * @return The score
      */
-    public Integer getScore() {
+    public String getScore() {
         return score;
     }
 
     /**
      * @param score The score
      */
-    public void setScore(Integer score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -177,14 +177,14 @@ public class Topic {
     /**
      * @return The frontPageSuggestionsCount
      */
-    public Integer getFrontPageSuggestionsCount() {
+    public String getFrontPageSuggestionsCount() {
         return frontPageSuggestionsCount;
     }
 
     /**
      * @param frontPageSuggestionsCount The front_page_suggestions_count
      */
-    public void setFrontPageSuggestionsCount(Integer frontPageSuggestionsCount) {
+    public void setFrontPageSuggestionsCount(String frontPageSuggestionsCount) {
         this.frontPageSuggestionsCount = frontPageSuggestionsCount;
     }
 

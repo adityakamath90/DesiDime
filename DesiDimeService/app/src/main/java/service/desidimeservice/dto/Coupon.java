@@ -10,7 +10,7 @@ public class Coupon {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("coupon_type")
     @Expose
     private String couponType;
@@ -31,7 +31,7 @@ public class Coupon {
     private String image;
     @SerializedName("redemption_count")
     @Expose
-    private Integer redemptionCount;
+    private String redemptionCount;
     @SerializedName("vote_value")
     @Expose
     private String voteValue;
@@ -40,7 +40,7 @@ public class Coupon {
     private String expiryDate;
     @SerializedName("created_at")
     @Expose
-    private Integer createdAt;
+    private String createdAt;
     @SerializedName("mobile_verification_required")
     @Expose
     private Boolean mobileVerificationRequired;
@@ -54,14 +54,14 @@ public class Coupon {
     /**
      * @return The id
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -152,14 +152,14 @@ public class Coupon {
     /**
      * @return The redemptionCount
      */
-    public Integer getRedemptionCount() {
+    public String getRedemptionCount() {
         return redemptionCount;
     }
 
     /**
      * @param redemptionCount The redemption_count
      */
-    public void setRedemptionCount(Integer redemptionCount) {
+    public void setRedemptionCount(String redemptionCount) {
         this.redemptionCount = redemptionCount;
     }
 
@@ -194,14 +194,14 @@ public class Coupon {
     /**
      * @return The createdAt
      */
-    public Integer getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
     /**
      * @param createdAt The created_at
      */
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -7,7 +7,7 @@ public class Deal {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("title")
     @Expose
     private String title;
@@ -16,25 +16,25 @@ public class Deal {
     private String offPercent;
     @SerializedName("current_price")
     @Expose
-    private Integer currentPrice;
+    private String currentPrice;
     @SerializedName("original_price")
     @Expose
-    private Integer originalPrice;
+    private String originalPrice;
     @SerializedName("image")
     @Expose
     private String image;
     @SerializedName("comments_count")
     @Expose
-    private Integer commentsCount;
+    private String commentsCount;
     @SerializedName("created_at")
     @Expose
-    private Integer createdAt;
+    private String createdAt;
     @SerializedName("score")
     @Expose
-    private Integer score;
+    private String score;
     @SerializedName("vote_value")
     @Expose
-    private Integer voteValue;
+    private String voteValue;
     @SerializedName("description")
     @Expose
     private String description;
@@ -51,14 +51,14 @@ public class Deal {
     /**
      * @return The id
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -93,28 +93,28 @@ public class Deal {
     /**
      * @return The currentPrice
      */
-    public Integer getCurrentPrice() {
+    public String getCurrentPrice() {
         return currentPrice;
     }
 
     /**
      * @param currentPrice The current_price
      */
-    public void setCurrentPrice(Integer currentPrice) {
+    public void setCurrentPrice(String currentPrice) {
         this.currentPrice = currentPrice;
     }
 
     /**
      * @return The originalPrice
      */
-    public Integer getOriginalPrice() {
+    public String getOriginalPrice() {
         return originalPrice;
     }
 
     /**
      * @param originalPrice The original_price
      */
-    public void setOriginalPrice(Integer originalPrice) {
+    public void setOriginalPrice(String originalPrice) {
         this.originalPrice = originalPrice;
     }
 
@@ -135,56 +135,56 @@ public class Deal {
     /**
      * @return The commentsCount
      */
-    public Integer getCommentsCount() {
+    public String getCommentsCount() {
         return commentsCount;
     }
 
     /**
      * @param commentsCount The comments_count
      */
-    public void setCommentsCount(Integer commentsCount) {
+    public void setCommentsCount(String commentsCount) {
         this.commentsCount = commentsCount;
     }
 
     /**
      * @return The createdAt
      */
-    public Integer getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
     /**
      * @param createdAt The created_at
      */
-    public void setCreatedAt(Integer createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
     /**
      * @return The score
      */
-    public Integer getScore() {
+    public String getScore() {
         return score;
     }
 
     /**
      * @param score The score
      */
-    public void setScore(Integer score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
     /**
      * @return The voteValue
      */
-    public Integer getVoteValue() {
+    public String getVoteValue() {
         return voteValue;
     }
 
     /**
      * @param voteValue The vote_value
      */
-    public void setVoteValue(Integer voteValue) {
+    public void setVoteValue(String voteValue) {
         this.voteValue = voteValue;
     }
 

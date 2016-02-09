@@ -38,33 +38,30 @@ public class PackageSniffer {
                 for (ActivityManager.RunningAppProcessInfo appProcess : runningAppProcessInfo) {
                     Log.d(appProcess.processName.toString(), "is running");
 
-                    for (int packageCounter = 0; packageCounter < Constants.PACKAGES.length;
-                         packageCounter++) {
-                        String currentApp = "NULL";
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES
-                                .LOLLIPOP) {
-                            UsageStatsManager usm = (UsageStatsManager) mContext.getSystemService
-                                    (Context.USAGE_STATS_SERVICE);
-                            long time = System.currentTimeMillis();
-                            List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager
-                                    .INTERVAL_DAILY, time - 1000 * 1000, time);
-                            if (appList != null && appList.size() > 0) {
-                                SortedMap<Long, UsageStats> mySortedMap = new TreeMap<>();
-                                for (UsageStats usageStats : appList) {
-                                    mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
-                                }
-                                if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                                    currentApp = mySortedMap.get(mySortedMap.lastKey())
-                                            .getPackageName();
-                                }
+                    String currentApp = "NULL";
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES
+                            .LOLLIPOP) {
+                        UsageStatsManager usm = (UsageStatsManager) mContext.getSystemService
+                                (Context.USAGE_STATS_SERVICE);
+                        long time = System.currentTimeMillis();
+                        List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager
+                                .INTERVAL_DAILY, time - 1000 * 1000, time);
+                        if (appList != null && appList.size() > 0) {
+                            SortedMap<Long, UsageStats> mySortedMap = new TreeMap<>();
+                            for (UsageStats usageStats : appList) {
+                                mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
                             }
-                        } else {
-                            List<ActivityManager.RunningAppProcessInfo> tasks = am
-                                    .getRunningAppProcesses();
-                            currentApp = tasks.get(0).processName;
+                            if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                                currentApp = mySortedMap.get(mySortedMap.lastKey())
+                                        .getPackageName();
+                            }
                         }
-                        startIconService(currentApp);
+                    } else {
+                        List<ActivityManager.RunningAppProcessInfo> tasks = am
+                                .getRunningAppProcesses();
+                        currentApp = tasks.get(0).processName;
                     }
+                    startIconService(currentApp);
 
 
                 }
@@ -75,7 +72,7 @@ public class PackageSniffer {
 
     private void startIconService(String processName) {
 
-        String currentPackage = null;
+        String currentPackage;
 
         switch (processName) {
             case Constants.AMAZON: {

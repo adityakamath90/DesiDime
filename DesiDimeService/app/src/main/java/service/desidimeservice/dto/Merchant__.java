@@ -8,7 +8,7 @@ public class Merchant__ {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -20,7 +20,7 @@ public class Merchant__ {
     private String permalink;
     @SerializedName("recommendation")
     @Expose
-    private Integer recommendation;
+    private String recommendation;
     @SerializedName("recommendation_flag")
     @Expose
     private Boolean recommendationFlag;
@@ -31,14 +31,14 @@ public class Merchant__ {
     /**
      * @return The id
      */
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id The id
      */
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -87,14 +87,14 @@ public class Merchant__ {
     /**
      * @return The recommendation
      */
-    public Integer getRecommendation() {
+    public String getRecommendation() {
         return recommendation;
     }
 
     /**
      * @param recommendation The recommendation
      */
-    public void setRecommendation(Integer recommendation) {
+    public void setRecommendation(String recommendation) {
         this.recommendation = recommendation;
     }
 
