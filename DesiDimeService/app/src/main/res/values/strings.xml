@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DesiDimeService</string>
+    <string name="no_internet">Please check internet connectivity.</string>
+    <string name="ok_text">OK</string>
 </resources>
