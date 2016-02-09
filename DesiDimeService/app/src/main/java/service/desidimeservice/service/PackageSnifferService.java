@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import service.desidimeservice.ui.MainActivity;
+import service.desidimeservice.manager.PackageSniffer;
 
 public class PackageSnifferService extends Service {
     @Nullable
@@ -16,14 +16,10 @@ public class PackageSnifferService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
-    }
 
-    private void startIconService() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        this.startActivity(intent);
+        PackageSniffer packageSniffer = new PackageSniffer(getApplicationContext());
+        packageSniffer.startSniffingForPakage();
+
+        return START_STICKY;
     }
 }
