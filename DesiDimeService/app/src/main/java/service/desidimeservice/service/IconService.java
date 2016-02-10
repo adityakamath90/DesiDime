@@ -34,8 +34,6 @@ public class IconService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Log.d(IconService.class.getSimpleName(), "I con service started");
-
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mChatHead = new ImageView(this);
         mChatHead.setImageResource(R.mipmap.ic_launcher);
@@ -92,7 +90,7 @@ public class IconService extends Service {
     private void launchActivity() {
         Intent intent = new Intent(IconService.this, MainActivity.class);
         intent.putExtra(Constants.PACKAGE_NAME, mPackageName);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         this.startActivity(intent);
     }
 
@@ -116,7 +114,6 @@ public class IconService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(PackageSniffer.class.getSimpleName(), "OnDestroy");
         if (mChatHead != null) {
             mWindowManager.removeView(mChatHead);
         }

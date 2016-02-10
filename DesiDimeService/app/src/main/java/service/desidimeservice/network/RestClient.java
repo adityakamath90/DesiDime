@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -40,7 +41,6 @@ public class RestClient {
         File httpCacheDirectory = new File(mContext.getCacheDir(), "responses");
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         Cache cache = new Cache(httpCacheDirectory, cacheSize);
-        // OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache)build();
         OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache).addInterceptor(
                 new Interceptor() {
                     @Override
@@ -73,7 +73,7 @@ public class RestClient {
                         .header("Cache-Control", cacheHeaderValue)
                         .build();
             }
-        }).build();
+        }).connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS).build();
         return okHttpClient;
     }
 }

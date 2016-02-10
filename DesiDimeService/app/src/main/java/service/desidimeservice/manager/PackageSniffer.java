@@ -57,8 +57,6 @@ public class PackageSniffer {
                                         .getPackageName();
                             }
                         }
-                        Log.d(PackageSniffer.class.getSimpleName(), "Current app in for loop  " +
-                                currentApp);
                     } else {
                         try {
                             mContext.startActivity(new Intent(Settings

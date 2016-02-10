@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else {
             mOfferId = Constants.AMAZON;
         }
-        Log.d(MainActivity.class.getSimpleName(), "offer id is " + mOfferId);
         initiateOffers(mOfferId);
     }
 
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void
                     onFailure(Throwable t) {
-                        //TODO : Handle error cases
+                        //TODO : Handle error cases with retrofit (timeout,read error etc)
                         hideProgress();
                     }
                 });
