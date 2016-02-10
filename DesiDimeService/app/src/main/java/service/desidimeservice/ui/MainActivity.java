@@ -1,7 +1,11 @@
 package service.desidimeservice.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView mImageView;
     private RecyclerView mOfferList;
     private List<Deal> mDealList;
+    private String mOfferId;
 
 
     @Override
@@ -37,12 +42,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        String id = "1";
+        if (getIntent() != null)
+            mOfferId = getOfferID(getIntent());
+
         if (NetworkUtils.isAvailable(MainActivity.this)) {
-            initiateOffers(id);
+            initiateOffers(mOfferId);
         } else {
             NetworkUtils.displayNetworkDialog(MainActivity.this);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                new IntentFilter(Constants.PACKAGE_NAME_BROADCAST));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            mOfferId = getOfferID(intent);
+
+            if (NetworkUtils.isAvailable(MainActivity.this)) {
+                initiateOffers(mOfferId);
+            } else {
+                NetworkUtils.displayNetworkDialog(MainActivity.this);
+            }
+        }
+    };
+
+    private String getOfferID(Intent intent) {
+        String offerId = null;
+        if (intent != null && intent.hasExtra(Constants.PACKAGE_NAME)) {
+            String message = intent.getStringExtra(Constants.PACKAGE_NAME);
+            if (message == null) {
+                return Constants.FLIPKART;
+            }
+            switch (message) {
+                case Constants.Package.AMAZON_PACKAGE_NAME: {
+                    offerId = Constants.AMAZON;
+                }
+                break;
+
+                case Constants.Package.FLIPKART_PACKAGE_NAME: {
+                    offerId = Constants.FLIPKART;
+                }
+                break;
+
+                case Constants.Package.CALCULATOR_PACKAGE_NAME: {
+                    offerId = Constants.AMAZON;
+                }
+                break;
+
+                default: {
+                    offerId = Constants.FLIPKART;
+                }
+                break;
+
+            }
+        }
+        return offerId;
     }
 
     private void initiateOffers(String id) {
@@ -128,4 +195,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
 }

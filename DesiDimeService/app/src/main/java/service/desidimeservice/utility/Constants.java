@@ -8,12 +8,14 @@ public class Constants {
     public static final String AMAZON = "502";
     public static final String ID = "id";
 
-    public static final String LATEX_MOBILE = "com.hp.latextogo";
     public static final String DEAL = "deal";
     public static String PACKAGE_NAME = "package_name";
+    public static String PACKAGE_NAME_BROADCAST = "package_name";
 
     public interface Package {
         String FLIPKART_PACKAGE_NAME = "com.flipkart.android";
         String AMAZON_PACKAGE_NAME = "com.amazon.mShop.android";
+        String CALCULATOR_PACKAGE_NAME = "com.hp.latextogo";
+
     }
 }

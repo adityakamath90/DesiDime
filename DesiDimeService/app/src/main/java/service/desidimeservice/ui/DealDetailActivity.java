@@ -33,6 +33,7 @@ public class DealDetailActivity extends AppCompatActivity {
         initViews();
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         setToolbarTitle(deal);
         downloadLargeDealImage(deal);
         setDealDescription(deal);
@@ -51,9 +52,8 @@ public class DealDetailActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (deal != null && !deal.getImage().isEmpty())
-                    Picasso.with(DealDetailActivity.this).load(deal.getImage()).resize(mLargeImage
-                            .getWidth
-                                    (), mLargeImage.getHeight()).centerCrop().placeholder(new
+                    Picasso.with(DealDetailActivity.this).load(deal.getImage()).fit().placeholder
+                            (new
                             ColorDrawable
                             (ContextCompat.getColor(DealDetailActivity.this, R
                                     .color.colorAccent))).into(mLargeImage);

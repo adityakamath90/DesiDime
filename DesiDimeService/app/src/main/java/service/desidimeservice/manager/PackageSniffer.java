@@ -5,7 +5,6 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -36,7 +35,7 @@ public class PackageSniffer {
                         .getRunningAppProcesses();
 
                 for (ActivityManager.RunningAppProcessInfo appProcess : runningAppProcessInfo) {
-                    Log.d(appProcess.processName.toString(), "is running");
+                    //  Log.d(appProcess.processName.toString(), "is running");
 
                     String currentApp = "NULL";
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES
@@ -56,10 +55,16 @@ public class PackageSniffer {
                                         .getPackageName();
                             }
                         }
+                        // Log.d(PackageSniffer.class.getSimpleName(), "Current app in for loop  " +
+                        //       currentApp);
+
                     } else {
                         List<ActivityManager.RunningAppProcessInfo> tasks = am
                                 .getRunningAppProcesses();
                         currentApp = tasks.get(0).processName;
+
+//                        Log.d(PackageSniffer.class.getSimpleName(), "Current app in for loop  " +
+                        //                              currentApp);
                     }
                     startIconService(currentApp);
 
@@ -71,28 +76,28 @@ public class PackageSniffer {
     }
 
     private void startIconService(String processName) {
-
-        String currentPackage;
-
+        //  Log.d(PackageSniffer.class.getSimpleName(), "Process running is " + processName);
+        Intent intent = new Intent(mContext, IconService.class);
         switch (processName) {
             case Constants.Package.AMAZON_PACKAGE_NAME: {
-                currentPackage = Constants.Package.AMAZON_PACKAGE_NAME;
-                Intent intent = new Intent(mContext, IconService.class);
-                intent.putExtra(Constants.PACKAGE_NAME, currentPackage);
+                intent.putExtra(Constants.PACKAGE_NAME, processName);
                 mContext.startService(intent);
             }
             break;
 
             case Constants.Package.FLIPKART_PACKAGE_NAME: {
-                currentPackage = Constants.Package.FLIPKART_PACKAGE_NAME;
-                Intent intent = new Intent(mContext, IconService.class);
-                intent.putExtra(Constants.PACKAGE_NAME, currentPackage);
+                intent.putExtra(Constants.PACKAGE_NAME, processName);
                 mContext.startService(intent);
             }
             break;
 
+            case Constants.Package.CALCULATOR_PACKAGE_NAME: {
+                intent.putExtra(Constants.PACKAGE_NAME, processName);
+                mContext.startService(intent);
+            }
+            break;
         }
-
+        mContext.startService(intent);
     }
 
 
