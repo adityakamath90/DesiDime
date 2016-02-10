@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(this, PackageSnifferService.class));
         if (getIntent() != null)
             mOfferId = getOfferID(getIntent());
 
@@ -81,8 +88,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String getOfferID(Intent intent) {
         String offerId = null;
+        Log.d(MainActivity.class.getSimpleName(), "getOfferId");
         if (intent != null && intent.hasExtra(Constants.PACKAGE_NAME)) {
             String message = intent.getStringExtra(Constants.PACKAGE_NAME);
+            Log.d(MainActivity.class.getSimpleName(), "Message is" +
+                    message);
             if (message == null) {
                 return Constants.FLIPKART;
             }

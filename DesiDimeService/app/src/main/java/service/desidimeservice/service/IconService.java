@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import service.desidimeservice.R;
+import service.desidimeservice.manager.PackageSniffer;
 import service.desidimeservice.ui.MainActivity;
 import service.desidimeservice.utility.Constants;
 
@@ -32,6 +34,8 @@ public class IconService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Log.d(IconService.class.getSimpleName(), "I con service started");
 
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mChatHead = new ImageView(this);
@@ -95,7 +99,11 @@ public class IconService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(PackageSniffer.class.getSimpleName(), "OnStart command");
+
         mPackageName = readIntent(intent);
+        Log.d(PackageSniffer.class.getSimpleName(), "Package name OnStart command " +
+                "-------------->" + mPackageName);
         sendLocalBroadcast(mPackageName);
         return START_NOT_STICKY;
     }
@@ -119,6 +127,7 @@ public class IconService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d(PackageSniffer.class.getSimpleName(), "OnDestroy");
         if (mChatHead != null) {
             mWindowManager.removeView(mChatHead);
         }
