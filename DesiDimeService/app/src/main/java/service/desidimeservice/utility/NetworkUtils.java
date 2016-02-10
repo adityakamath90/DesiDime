@@ -30,7 +30,7 @@ public class NetworkUtils {
                             DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ((Activity) ctx).finish();
+                                    dialog.dismiss();
                                 }
                             }).create().show();
         } catch (WindowManager.BadTokenException e) {

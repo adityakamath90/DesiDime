@@ -46,13 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mOfferId = Constants.AMAZON;
         }
         Log.d(MainActivity.class.getSimpleName(), "offer id is " + mOfferId);
-        if (NetworkUtils.isAvailable(MainActivity.this)) {
-            initiateOffers(mOfferId);
-        } else {
-            NetworkUtils.displayNetworkDialog(MainActivity.this);
-        }
+        initiateOffers(mOfferId);
     }
-
 
     private String getOfferID(Intent intent) {
         String offerId = Constants.AMAZON;
@@ -86,10 +81,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return offerId;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!NetworkUtils.isAvailable(MainActivity.this)) {
+            NetworkUtils.displayNetworkDialog(MainActivity.this);
+        }
+    }
+
     private void initiateOffers(String id) {
 
         showProgress();
-        RestClient.getDesiDimeService().getOffers(id, Constants.TOKEN)
+        new RestClient().getDesiDimeService(MainActivity.this).getOffers(id, Constants.TOKEN)
                 .enqueue(new Callback<DesiDimeData>() {
 
                     @Override
@@ -132,11 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         if (mDealList != null && !mDealList.isEmpty()) {
                             Deal deal = mDealList.get(position);
-                            if (NetworkUtils.isAvailable(MainActivity.this)) {
-                                startDealDetailActivity(deal);
-                            } else {
-                                NetworkUtils.displayNetworkDialog(MainActivity.this);
-                            }
+                            startDealDetailActivity(deal);
+
                         }
 
                     }
