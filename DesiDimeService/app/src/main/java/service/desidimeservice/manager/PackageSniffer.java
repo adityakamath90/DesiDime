@@ -62,7 +62,8 @@ public class PackageSniffer {
                     } else {
                         try {
                             mContext.startActivity(new Intent(Settings
-                                    .ACTION_USAGE_ACCESS_SETTINGS));
+                                    .ACTION_USAGE_ACCESS_SETTINGS).addFlags(Intent
+                                    .FLAG_ACTIVITY_NEW_TASK));
                         } catch (ActivityNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -90,12 +91,6 @@ public class PackageSniffer {
             break;
 
             case Constants.Package.FLIPKART_PACKAGE_NAME: {
-                intent.putExtra(Constants.PACKAGE_NAME, processName);
-                mContext.startService(intent);
-            }
-            break;
-
-            case Constants.Package.CALCULATOR_PACKAGE_NAME: {
                 intent.putExtra(Constants.PACKAGE_NAME, processName);
                 mContext.startService(intent);
             }

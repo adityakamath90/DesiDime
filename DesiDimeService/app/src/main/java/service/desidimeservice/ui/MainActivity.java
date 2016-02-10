@@ -1,11 +1,7 @@
 package service.desidimeservice.ui;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,15 +39,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         startService(new Intent(this, PackageSnifferService.class));
         if (getIntent() != null)
             mOfferId = getOfferID(getIntent());
-
+        else {
+            mOfferId = Constants.AMAZON;
+        }
+        Log.d(MainActivity.class.getSimpleName(), "offer id is " + mOfferId);
         if (NetworkUtils.isAvailable(MainActivity.this)) {
             initiateOffers(mOfferId);
         } else {
@@ -59,42 +53,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(Constants.PACKAGE_NAME_BROADCAST));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
-    }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            mOfferId = getOfferID(intent);
-
-            if (NetworkUtils.isAvailable(MainActivity.this)) {
-                initiateOffers(mOfferId);
-            } else {
-                NetworkUtils.displayNetworkDialog(MainActivity.this);
-            }
-        }
-    };
 
     private String getOfferID(Intent intent) {
-        String offerId = null;
+        String offerId = Constants.AMAZON;
         Log.d(MainActivity.class.getSimpleName(), "getOfferId");
         if (intent != null && intent.hasExtra(Constants.PACKAGE_NAME)) {
             String message = intent.getStringExtra(Constants.PACKAGE_NAME);
             Log.d(MainActivity.class.getSimpleName(), "Message is" +
                     message);
             if (message == null) {
-                return Constants.FLIPKART;
+                offerId = Constants.AMAZON;
+                return offerId;
             }
             switch (message) {
                 case Constants.Package.AMAZON_PACKAGE_NAME: {
@@ -107,13 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
 
-                case Constants.Package.CALCULATOR_PACKAGE_NAME: {
-                    offerId = Constants.AMAZON;
-                }
-                break;
-
                 default: {
-                    offerId = Constants.FLIPKART;
+                    offerId = Constants.AMAZON;
                 }
                 break;
 

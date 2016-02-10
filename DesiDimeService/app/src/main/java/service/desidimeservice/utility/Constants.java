@@ -15,7 +15,5 @@ public class Constants {
     public interface Package {
         String FLIPKART_PACKAGE_NAME = "com.flipkart.android";
         String AMAZON_PACKAGE_NAME = "in.amazon.mShop.android.shopping";
-        String CALCULATOR_PACKAGE_NAME = "com.hp.latextogo";
-
     }
 }

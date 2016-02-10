@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -99,26 +98,16 @@ public class IconService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(PackageSniffer.class.getSimpleName(), "OnStart command");
-
         mPackageName = readIntent(intent);
-        Log.d(PackageSniffer.class.getSimpleName(), "Package name OnStart command " +
-                "-------------->" + mPackageName);
-        sendLocalBroadcast(mPackageName);
         return START_NOT_STICKY;
     }
 
-    private void sendLocalBroadcast(String packageName) {
-        Intent broadCastIntent = new Intent(Constants.PACKAGE_NAME_BROADCAST);
-        broadCastIntent.putExtra(Constants.PACKAGE_NAME, packageName);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(broadCastIntent);
-    }
 
     private String readIntent(Intent intent) {
         String packageName = null;
         if (intent != null) {
             if (intent.hasExtra(Constants.PACKAGE_NAME)) {
-                mPackageName = intent.getStringExtra(Constants.PACKAGE_NAME);
+                packageName = intent.getStringExtra(Constants.PACKAGE_NAME);
             }
         }
         return packageName;
