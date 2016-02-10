@@ -11,8 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ import service.desidimeservice.utility.NetworkUtils;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ProgressBar mProgressBar;
-    private ImageView mImageView;
+    private TextView mCloseIconView;
     private RecyclerView mOfferList;
     private List<Deal> mDealList;
     private String mOfferId;
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initViews() {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        mImageView = (ImageView) findViewById(R.id.close_icon);
+        mCloseIconView = (TextView) findViewById(R.id.close_icon);
         mOfferList = (RecyclerView) findViewById(R.id.offer_list);
         mOfferList.setLayoutManager(new LinearLayoutManager(this));
         mOfferList.addOnItemTouchListener(
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 })
         );
-        mImageView.setOnClickListener(this);
+        mCloseIconView.setOnClickListener(this);
     }
 
     private void hideProgress() {

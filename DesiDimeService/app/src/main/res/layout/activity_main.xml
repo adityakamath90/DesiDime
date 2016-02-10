@@ -16,12 +16,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <ImageView
+    <TextView
+        android:clickable="true"
+        android:text="X"
+        android:textSize="40sp"
         android:id="@+id/close.icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="@mipmap/ic_launcher"
         />
 
 

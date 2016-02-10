@@ -1,10 +1,17 @@
 package service.desidimeservice.manager;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 
 import java.util.List;
@@ -20,6 +27,7 @@ public class PackageSniffer {
 
     private Context mContext;
     private Timer mTimer;
+
     public PackageSniffer(Context context) {
         mContext = context;
     }
@@ -33,24 +41,32 @@ public class PackageSniffer {
                 String currentApp = "NULL";
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES
                         .LOLLIPOP) {
-                    UsageStatsManager usageStatsManager = (UsageStatsManager) mContext
-                            .getSystemService
-                                    (Context.USAGE_STATS_SERVICE);
-                    List<UsageStats> appList = usageStatsManager.queryUsageStats
-                            (UsageStatsManager.INTERVAL_DAILY, 0, System.currentTimeMillis());
-                    if (appList != null && appList.size() > 0) {
-                        SortedMap<Long, UsageStats> mySortedMap = new TreeMap<>();
-                        for (UsageStats usageStats : appList) {
-                            mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
+                    if (checkForUsageStats()) {
+                        UsageStatsManager usageStatsManager = (UsageStatsManager) mContext
+                                .getSystemService
+                                        (Context.USAGE_STATS_SERVICE);
+                        List<UsageStats> appList = usageStatsManager.queryUsageStats
+                                (UsageStatsManager.INTERVAL_DAILY, 0, System.currentTimeMillis());
+                        if (appList != null && appList.size() > 0) {
+                            SortedMap<Long, UsageStats> mySortedMap = new TreeMap<>();
+                            for (UsageStats usageStats : appList) {
+                                mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
+                            }
+                            if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                                currentApp = mySortedMap.get(mySortedMap.lastKey())
+                                        .getPackageName();
+                            }
                         }
-                        if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                            currentApp = mySortedMap.get(mySortedMap.lastKey())
-                                    .getPackageName();
+                        Log.d(PackageSniffer.class.getSimpleName(), "Current app in for loop  " +
+                                currentApp);
+                    } else {
+                        try {
+                            mContext.startActivity(new Intent(Settings
+                                    .ACTION_USAGE_ACCESS_SETTINGS));
+                        } catch (ActivityNotFoundException e) {
+                            e.printStackTrace();
                         }
                     }
-                    Log.d(PackageSniffer.class.getSimpleName(), "Current app in for loop  " +
-                            currentApp);
-
                 } else {
                     ActivityManager am = (ActivityManager) mContext.getSystemService(Context
                             .ACTIVITY_SERVICE);
@@ -93,6 +109,23 @@ public class PackageSniffer {
             mTimer.purge();
             mTimer.cancel();
             mTimer = null;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private boolean checkForUsageStats() {
+        try {
+            PackageManager packageManager = mContext.getPackageManager();
+            ApplicationInfo applicationInfo = packageManager.getApplicationInfo(mContext
+                    .getPackageName(), 0);
+            AppOpsManager appOpsManager = (AppOpsManager) mContext.getSystemService(Context
+                    .APP_OPS_SERVICE);
+            int mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
+                    applicationInfo.uid, applicationInfo.packageName);
+            return (mode == AppOpsManager.MODE_ALLOWED);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }
